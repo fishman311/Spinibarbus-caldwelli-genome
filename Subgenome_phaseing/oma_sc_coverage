@@ -1,0 +1,4 @@
+bwa mem -M -t 80 sh_hap1_HiC_50chr.fa SRR11216575_1.fastq.gz SRR11216575_2.fastq.gz | samtools view -@30 -Sb - > SRR11216575.bam
+samtools sort SRR11216575.bam -@ 50 -O bam -o SRR11216575.sorted.bam
+samtools view -h -q 1 -F 4 -F 256 SRR11216575.sorted.bam |grep -v XA:Z |grep -v SA:Z |samtools view -b - > SRR11216575.sorted.dedup.unique.bam
+bedtools coverage -a Chr.bed -b SRR11216575.sorted.dedup.unique.bam > unique.cov.txt
